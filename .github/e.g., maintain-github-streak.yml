@@ -1,1 +1,20 @@
 
+name: Maintain GitHub Streak
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Run the workflow at 12:00 AM UTC every day
+
+jobs:
+  maintain-streak:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Commit daily update
+        run: |
+          echo "$(date '+%Y-%m-%d')" > date.txt
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add date.txt
+          git commit -m "Daily commit to maintain GitHub streak"
+          git push
